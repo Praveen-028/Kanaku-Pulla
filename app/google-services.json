@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "429119500009",
+    "firebase_url": "https://kanaku-pulla-db-default-rtdb.firebaseio.com",
+    "project_id": "kanaku-pulla-db",
+    "storage_bucket": "kanaku-pulla-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429119500009:android:5d1ef7712cc97135a38a78",
+        "android_client_info": {
+          "package_name": "com.example.kanakupulla"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0HddgO23CkkQohfQPhhA2vldNSol0_A0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429119500009:android:50042d41fd70cbc3a38a78",
+        "android_client_info": {
+          "package_name": "com.example.sign_inandlog_in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0HddgO23CkkQohfQPhhA2vldNSol0_A0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429119500009:android:851a659abbb862a0a38a78",
+        "android_client_info": {
+          "package_name": "com.example.signuplogin_frd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0HddgO23CkkQohfQPhhA2vldNSol0_A0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
