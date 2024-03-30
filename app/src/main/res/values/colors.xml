@@ -4,4 +4,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tool_color">#EABC60</color>
+    <color name="dashboard_color">#BBDAF6</color>
+    <color name="income_color">#9DCBF4</color>
+    <color name="expense_color">#6494EC</color>
+    <color name="violet">#9620AA</color>
 </resources>

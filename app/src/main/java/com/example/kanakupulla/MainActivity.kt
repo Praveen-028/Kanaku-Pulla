@@ -37,6 +37,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         mAuth=FirebaseAuth.getInstance()
+        mAuth.currentUser?.let {
+            startActivity(Intent(applicationContext, HomeScreen::class.java))
+        }
+
         mDialog= ProgressDialog(this)
 
         loginDetails()
