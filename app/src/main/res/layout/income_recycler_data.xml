@@ -5,11 +5,12 @@
     android:elevation="5dp"
     android:layout_margin="5dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:layout_margin="5dp">
 
         <RelativeLayout
@@ -22,6 +23,7 @@
                 android:text="6 July 2010"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textStyle="bold"
+                android:maxLines="1"
                 android:id="@+id/date_txt_income"
                 android:textColor="@color/violet"
                 />
@@ -66,7 +68,7 @@
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textStyle="bold"
                 android:id="@+id/ammount_txt_income"
-                android:textColor="@color/violet"
+                android:textColor="@color/expense_color"
                 />
         </RelativeLayout>
 

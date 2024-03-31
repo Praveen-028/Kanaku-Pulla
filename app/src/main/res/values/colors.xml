@@ -8,4 +8,6 @@
     <color name="income_color">#9DCBF4</color>
     <color name="expense_color">#6494EC</color>
     <color name="violet">#9620AA</color>
+    <color name="red">#FF001E</color>
+    <color name="blue">#0038FF</color>
 </resources>

@@ -9,4 +9,7 @@
     <item android:id="@+id/expense"
         android:title="Expense"
         android:icon="@drawable/expense"/>
+    <item android:id="@+id/logout"
+        android:icon="@drawable/log_out"
+        android:title="Log Out"/>
 </menu>

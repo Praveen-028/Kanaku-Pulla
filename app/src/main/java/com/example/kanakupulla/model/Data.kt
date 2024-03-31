@@ -5,5 +5,5 @@ class Data(
     var type: String = "",
     var note: String = "",
     var id: String = "",
-    var date: String = ""
+    var date: String=""
 )
