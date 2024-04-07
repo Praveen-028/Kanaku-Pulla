@@ -6,7 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensesmanager.model.Data
-class IncomeAdapter(private var dataList: List<Data>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+interface IncomeItemClickListener {
+    fun onItemClick(data: Data)
+}
+
+class IncomeAdapter(private var dataList: MutableList<Data>,private val itemClickListener: IncomeItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_HEADER = 0
     private val TYPE_ITEM = 1
@@ -53,19 +57,31 @@ class IncomeAdapter(private var dataList: List<Data>) : RecyclerView.Adapter<Rec
         }
     }
 
-
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
         private val mType: TextView = itemView.findViewById(R.id.type_txt_income)
         private val mNote: TextView = itemView.findViewById(R.id.note_txt_income)
         private val mDate: TextView = itemView.findViewById(R.id.date_txt_income)
         private val mAmount: TextView = itemView.findViewById(R.id.ammount_txt_income)
+        private var dataId: String = ""
 
         fun bind(data: Data) {
+            dataId = data.id
             mType.text = data.type
             mNote.text = data.note
             mDate.text = data.date
             mAmount.text = data.amount.toString()
         }
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val data = dataList[position-1]
+                itemClickListener.onItemClick(data) // Invoke the callback method
+            }
+        }
+
     }
 
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -75,8 +91,14 @@ class IncomeAdapter(private var dataList: List<Data>) : RecyclerView.Adapter<Rec
         private val mAmount: TextView = itemView.findViewById(R.id.ammount_txt_income)
     }
 
-        fun setData(newData: List<Data>) {
-        dataList = newData
+    fun setData(newData: List<Data>) {
+        dataList.clear()
+        dataList.addAll(newData)
+        // Add new data
         notifyDataSetChanged()
     }
+
 }
+
+
+

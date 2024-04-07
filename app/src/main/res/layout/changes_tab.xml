@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/intro_btn_background2">
+            <TextView
+                android:layout_width="110dp"
+                android:textAlignment="center"
+                android:text="Delete"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_background"
+                android:id="@+id/deletedata"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="110dp"
+                android:textAlignment="center"
+                android:text="Save"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_background"
+                android:id="@+id/savetomain"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

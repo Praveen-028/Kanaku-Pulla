@@ -15,5 +15,9 @@
         android:title="Expense"
         android:visible="true"
         android:icon="@drawable/expense"/>
+    <item android:id="@+id/unpaid"
+        android:title="Unpaid"
+        android:visible="true"
+        android:icon="@drawable/unpaid_icon"/>
 
 </menu>

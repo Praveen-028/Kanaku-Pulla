@@ -11,11 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/white"
         android:elevation="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -26,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:text="Income"/>
             </RelativeLayout>
             <RelativeLayout
@@ -39,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:text="000.000"
                     android:id="@+id/income_txt_result"/>
             </RelativeLayout>

@@ -3,11 +3,14 @@
     <color name="orange">#a7c728</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="tool_color">#EABC60</color>
-    <color name="dashboard_color">#BBDAF6</color>
-    <color name="income_color">#9DCBF4</color>
-    <color name="expense_color">#6494EC</color>
+    <color name="tool_color">#967EB5</color>
+    <color name="dashboard_color">#A18DB6</color>
+    <color name="income_color">#7B6E9D</color>
+    <color name="greens">#00FF00</color>
+    <color name="expense_color">#7F6D9E</color>
     <color name="violet">#9620AA</color>
     <color name="red">#FF001E</color>
     <color name="blue">#0038FF</color>
+    <color name="intro">#603a91</color>
+    <color name="grey">#808080</color>
 </resources>

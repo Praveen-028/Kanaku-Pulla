@@ -56,6 +56,7 @@ class HomeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         val dashboardFragment = DashboardFragment()
         val incomeFragment=IncomeFragment()
         val expenseFragment=ExpenseFragment()
+        val unpaidFragment=Unpaid_tab()
 
         mAuth=FirebaseAuth.getInstance()
 
@@ -79,6 +80,12 @@ class HomeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 R.id.expense ->{
                     setFragment(expenseFragment)
                     bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, R.color.expense_color))
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.unpaid->{
+                    setFragment(unpaidFragment)
+                    bottomNavigationView.setBackgroundColor(ContextCompat.getColor(this, R.color.expense_color))
+
                     return@setOnNavigationItemSelectedListener true
                 }
                 // Add more cases for other menu items if needed
@@ -114,6 +121,10 @@ class HomeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNaviagatioBar)
         when (itemId) {
+            R.id.Profile ->{
+                startActivity(Intent(this,Profile_page::class.java))
+            }
+
             R.id.dashbord -> {
                 fragment = DashboardFragment()
                 setFragment(fragment)
@@ -131,7 +142,7 @@ class HomeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             }
             R.id.logout -> {
                 mAuth.signOut()
-                startActivity(Intent(this,MainActivity::class.java))
+                startActivity(Intent(this,IntroActivity::class.java))
                 finish()
             }
         }
