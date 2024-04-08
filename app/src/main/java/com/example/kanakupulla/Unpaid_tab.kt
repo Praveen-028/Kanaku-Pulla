@@ -148,7 +148,39 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(unData: UnData) {
-        // Handle item click...
+        mAuth = FirebaseAuth.getInstance()
+        val currentUser: FirebaseUser? = mAuth.currentUser
+        val uid: String = currentUser?.uid ?: ""
+
+        val databaseReference = FirebaseDatabase.getInstance().getReference("UnpaidData").child(uid).child(unData.id)
+
+        val myDialog = AlertDialog.Builder(requireContext())
+        val inflater = LayoutInflater.from(requireContext())
+        val myView = inflater.inflate(R.layout.changes_tab, null)
+        myDialog.setView(myView)
+
+        val dialog = myDialog.create()
+
+        val btndel = myView.findViewById<TextView>(R.id.deletedata)
+        btndel.setOnClickListener {
+            databaseReference.removeValue()
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+                .addOnFailureListener { e ->
+                    Log.e(ContentValues.TAG, "Error deleting data: $e")
+                    Toast.makeText(requireContext(), "Can't Delete", Toast.LENGTH_SHORT).show()
+                }
+            dialog.dismiss()
+        }
+
+        val alertDialog = myDialog.show()
+
+// Set the dialog's gravity to CENTER
+        val window = alertDialog.window
+        window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window?.setGravity(Gravity.CENTER)
     }
 }
 
