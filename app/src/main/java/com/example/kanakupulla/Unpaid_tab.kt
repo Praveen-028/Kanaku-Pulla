@@ -1,4 +1,3 @@
-// Unpaid_tab.kt
 package com.example.kanakupulla
 
 import android.app.AlertDialog
@@ -9,6 +8,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,17 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.example.expensesmanager.model.UnData
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ValueEventListener
-
-interface OnItemClickListener {
-    fun onItemClick(position: UnData)
-}
+import com.example.expensesmanager.model.UnData
 
 class Unpaid_tab : Fragment(), OnItemClickListener {
 
@@ -34,13 +31,12 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
     private lateinit var un_fb_main_plus_btn: FloatingActionButton
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mUnpaid: DatabaseReference
-    private lateinit var unpaidAdapter: UnpaidAdapter // Create an adapter for your unpaid data
+    private lateinit var unpaidAdapter: UnpaidAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_unpaid_tab, container, false)
     }
 
@@ -50,15 +46,13 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
 
         val mUser = mAuth.currentUser
         val uid: String = mUser!!.uid
-        // Initialize RecyclerViews
+
         UnpaidRecycler = view.findViewById(R.id.unpaidRecycler)
-        unpaidAdapter = UnpaidAdapter(this) // Initialize your custom adapter
+        unpaidAdapter = UnpaidAdapter(this)
         UnpaidRecycler.layoutManager = LinearLayoutManager(requireContext())
         UnpaidRecycler.adapter = unpaidAdapter
 
         mUnpaid = FirebaseDatabase.getInstance().getReference().child("UnpaidData").child(uid)
-
-        un_fb_main_plus_btn = view.findViewById(R.id.un_fb_main_plus_btn)
 
         mUnpaid.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -69,62 +63,95 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
                         unpaidList.add(it)
                     }
                 }
-                unpaidAdapter.submitList(unpaidList) // Pass the fetched data to your adapter
+                unpaidAdapter.submitList(unpaidList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
                 Log.e("Unpaid_tab", "Database error: ${error.message}")
             }
         })
 
-        // Set click listener for floating action button
+        un_fb_main_plus_btn = view.findViewById(R.id.un_fb_main_plus_btn)
+
         un_fb_main_plus_btn.setOnClickListener {
-            // Your click listener logic goes here
-            showToast("Floating action button clicked")
+            val myDialog = AlertDialog.Builder(activity)
+            val inflater = LayoutInflater.from(activity)
+            val myView = inflater.inflate(R.layout.unpaid_layout, null)
+            myDialog.setView(myView)
+
+            val dialog = myDialog.create()
+
+            val uneditamount = myView.findViewById<EditText>(R.id.un_amount_edt)
+            val unedittype = myView.findViewById<EditText>(R.id.un_type_edt)
+            val uneditnote = myView.findViewById<EditText>(R.id.un_note_edt)
+
+            val radioGroup = myView.findViewById<RadioGroup>(R.id.RadioGroup)
+            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                // Handle radio button selection
+            }
+
+            val btnca = myView.findViewById<TextView>(R.id.un_btnCancel)
+            val btnsa = myView.findViewById<TextView>(R.id.un_btnSave)
+
+            btnsa.setOnClickListener {
+                val type = unedittype.text.toString().trim()
+                val amount = uneditamount.text.toString().trim()
+                val note = uneditnote.text.toString().trim()
+
+                val checkedRadioButtonId = radioGroup.checkedRadioButtonId
+                val towhat = when (checkedRadioButtonId) {
+                    R.id.chooseincome -> "Income"
+                    R.id.chooseexpense -> "Expense"
+                    else -> {
+                        showToast("Choose the radio button")
+                        return@setOnClickListener
+                    }
+                }
+
+                if (type.isEmpty()) {
+                    unedittype.error = "Required Field.."
+                }
+                if (amount.isEmpty()) {
+                    uneditamount.error = "Required Field.."
+                }
+                val ourAmountInt = amount.toIntOrNull() ?: 0 // Handle invalid input
+                if (note.isEmpty()) {
+                    uneditnote.error = "Required Field.."
+                }
+
+                val mUser = mAuth.currentUser
+                val uid: String = mUser!!.uid
+                val id: String = mUnpaid.child(uid).push().key!!
+
+                val undata = UnData(ourAmountInt, type, note, towhat, uid)
+
+                mUnpaid.child(id).setValue(undata)
+                    .addOnSuccessListener {
+                        showToast("Data Added")
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        showToast("Failed to add data")
+                    }
+            }
+
+            btnca.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.show()
         }
     }
 
     private fun showToast(message: String) {
-        // You can replace this with your desired action
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onItemClick(unData: UnData) {
-
-        mAuth = FirebaseAuth.getInstance()
-        val currentUser: FirebaseUser? = mAuth.currentUser
-        val uid: String = currentUser?.uid ?: ""
-
-        val databaseReference = FirebaseDatabase.getInstance().getReference("UnpaidData").child(uid).child(unData.id)
-
-        val myDialog = AlertDialog.Builder(requireContext())
-        val inflater = LayoutInflater.from(requireContext())
-        val myView = inflater.inflate(R.layout.changes_tab, null)
-        myDialog.setView(myView)
-
-        val dialog = myDialog.create()
-
-        val btndel = myView.findViewById<TextView>(R.id.deletedata)
-        btndel.setOnClickListener {
-            databaseReference.removeValue()
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                }
-                .addOnFailureListener { e ->
-                    Log.e(ContentValues.TAG, "Error deleting data: $e")
-                    Toast.makeText(requireContext(), "Can't Delete", Toast.LENGTH_SHORT).show()
-                }
-            dialog.dismiss()
-        }
-
-        val alertDialog = myDialog.show()
-
-// Set the dialog's gravity to CENTER
-        val window = alertDialog.window
-        window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window?.setGravity(Gravity.CENTER)
+        // Handle item click...
     }
+}
 
+interface OnItemClickListener {
+    fun onItemClick(position: UnData)
 }

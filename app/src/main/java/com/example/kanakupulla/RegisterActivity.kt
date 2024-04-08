@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,6 +43,10 @@ class RegisterActivity : AppCompatActivity() {
         registration()
     }
 
+    private fun isValidEmail(email: String): Boolean {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
     private fun registration() {
         mEmail = findViewById(R.id.email_register) ?: return
         mPass = findViewById(R.id.password_register) ?: return
@@ -54,8 +59,8 @@ class RegisterActivity : AppCompatActivity() {
             val cnpass = cmPass.text.toString().trim()
             val pass = mPass.text.toString().trim()
 
-            if (TextUtils.isEmpty(email)) {
-                mEmail.error = "Email Required"
+            if (!isValidEmail(email)) {
+                mEmail.error = "Enter a valid email address"
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(pass)) {
@@ -102,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
                                 ).show()
                             }
                         }
-                }else {
+                } else {
                     mDialog.dismiss()
                     Toast.makeText(applicationContext, "Registration Failed", Toast.LENGTH_SHORT).show()
                 }
@@ -119,5 +124,5 @@ class RegisterActivity : AppCompatActivity() {
         val intent = Intent(this, Login2Activity::class.java)
         startActivity(intent)
         finish()
-       }
+    }
 }
