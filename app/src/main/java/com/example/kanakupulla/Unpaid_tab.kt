@@ -24,6 +24,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.example.expensesmanager.model.UnData
+import com.example.expensesmanager.model.Data
+import java.text.DateFormat
+import java.util.Date
 
 class Unpaid_tab : Fragment(), OnItemClickListener {
 
@@ -123,7 +126,7 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
                 val uid: String = mUser!!.uid
                 val id: String = mUnpaid.child(uid).push().key!!
 
-                val undata = UnData(ourAmountInt, type, note, towhat, uid)
+                val undata = UnData(ourAmountInt, type, note, towhat, id)
 
                 mUnpaid.child(id).setValue(undata)
                     .addOnSuccessListener {
@@ -152,7 +155,7 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
         val currentUser: FirebaseUser? = mAuth.currentUser
         val uid: String = currentUser?.uid ?: ""
 
-        val databaseReference = FirebaseDatabase.getInstance().getReference("UnpaidData").child(uid).child(unData.id)
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("UnpaidData").child(uid).child(unData.id)
 
         val myDialog = AlertDialog.Builder(requireContext())
         val inflater = LayoutInflater.from(requireContext())
@@ -160,22 +163,78 @@ class Unpaid_tab : Fragment(), OnItemClickListener {
         myDialog.setView(myView)
 
         val dialog = myDialog.create()
+        val alertDialog = myDialog.show()
 
         val btndel = myView.findViewById<TextView>(R.id.deletedata)
         btndel.setOnClickListener {
             databaseReference.removeValue()
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
+                    alertDialog.dismiss()
                 }
                 .addOnFailureListener { e ->
                     Log.e(ContentValues.TAG, "Error deleting data: $e")
                     Toast.makeText(requireContext(), "Can't Delete", Toast.LENGTH_SHORT).show()
                 }
-            dialog.dismiss()
+            alertDialog.dismiss()
+        }
+        val btnsave=myView.findViewById<TextView>(R.id.savetomain)
+        btnsave.setOnClickListener{
+            val mDate:String= DateFormat.getDateInstance().format(Date())
+            if (unData.to=="Income")
+            {
+                val incomeDatabase = FirebaseDatabase.getInstance().reference.child("IncomeData").child(uid)
+                val id = incomeDatabase.push().key ?: ""
+                val incomeData = Data(unData.ourAmountInt, unData.type, unData.note, mDate, id)
+                incomeDatabase.child(id).setValue(incomeData)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Data saved to Income", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Failed to save data to Income", Toast.LENGTH_SHORT).show()
+                    }
+                databaseReference.removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                        alertDialog.dismiss()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(ContentValues.TAG, "Error deleting data: $e")
+                        Toast.makeText(requireContext(), "Can't Delete", Toast.LENGTH_SHORT).show()
+                    }
+                alertDialog.dismiss()
+            }
+            else{
+                val expenseDatabase = FirebaseDatabase.getInstance().reference.child("ExpenseData").child(uid)
+                val id = expenseDatabase.push().key ?: ""
+                val expenseData = Data(unData.ourAmountInt, unData.type, unData.note, mDate, id)
+
+// Save the data to the "ExpenseData" database
+                expenseDatabase.child(id).setValue(expenseData)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Data saved to Expenses", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Failed to save data to Expenses", Toast.LENGTH_SHORT).show()
+                    }
+
+// Remove the data from the original location
+                databaseReference.removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                        alertDialog.dismiss()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(ContentValues.TAG, "Error deleting data: $e")
+                        Toast.makeText(requireContext(), "Can't Delete", Toast.LENGTH_SHORT).show()
+                    }
+
+                alertDialog.dismiss()
+
+            }
         }
 
-        val alertDialog = myDialog.show()
+
 
 // Set the dialog's gravity to CENTER
         val window = alertDialog.window

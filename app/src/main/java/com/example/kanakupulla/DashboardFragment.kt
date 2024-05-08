@@ -3,6 +3,7 @@ package com.example.kanakupulla
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,7 +101,10 @@ class DashboardFragment  : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                val errorMessage = "Database error: ${error.message}"
+                Log.e("DashboardFragment", errorMessage)
+                // Show a toast message
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
         mExpenseDatabase.addValueEventListener(object : ValueEventListener {
@@ -113,8 +117,11 @@ class DashboardFragment  : Fragment() {
                 totalExpenseTextView.text = "$totalExpense"
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle errors
+            override fun onCancelled(error: DatabaseError) {
+                val errorMessage = "Database error: ${error.message}"
+                Log.e("DashboardFragment", errorMessage)
+                // Show a toast message
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
         // Fetch income data and create adapter
@@ -130,8 +137,10 @@ class DashboardFragment  : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
-            }
+                val errorMessage = "Database error: ${error.message}"
+                Log.e("DashboardFragment", errorMessage)
+                // Show a toast message
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()            }
         })
 
 // Fetch expense data and create adapter
@@ -302,7 +311,7 @@ class DashboardFragment  : Fragment() {
 
             val mDate:String=DateFormat.getDateInstance().format(Date())
 
-            val data = Data(inAmountInt, ttype, tnote, id, mDate)
+            val data = Data(inAmountInt, ttype, tnote, mDate,id)
 
             mExpenseDatabase.child(id).setValue(data)
             Toast.makeText(activity,"Data Added",Toast.LENGTH_SHORT).show()

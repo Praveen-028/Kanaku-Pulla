@@ -129,7 +129,7 @@ class ExpenseFragment : Fragment(),ExpenseItemClickListener {
         btndel.setOnClickListener{
             val currentUser: FirebaseUser? = mAuth.currentUser
             val uid: String = currentUser?.uid ?: ""
-            val databaseReference = FirebaseDatabase.getInstance().reference.child("IncomeData").child(uid).child(dataId)
+            val databaseReference = FirebaseDatabase.getInstance().reference.child("ExpenseData").child(uid).child(dataId)
             databaseReference.removeValue()
                 .addOnSuccessListener {
                     // Data deleted successfully
