@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.kanakupulla">
+    package="com.mad.kanakupulla">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -14,19 +36,22 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".Profile_page"
+            android:name="com.mad.kanakupulla.GraphActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.mad.kanakupulla.Profile_page"
             android:exported="false" />
         <activity
-            android:name=".Login2Activity"
+            android:name="com.mad.kanakupulla.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".IntroActivity"
+            android:name="com.mad.kanakupulla.Login2Activity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.mad.kanakupulla.IntroActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.mad.kanakupulla.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,12 +60,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeScreen"
+            android:name="com.mad.kanakupulla.HomeScreen"
             android:exported="false" />
         <activity
-            android:name=".Resetactivity"
+            android:name="com.mad.kanakupulla.Resetactivity"
             android:exported="false" />
 
+        <receiver
+            android:name="com.mad.kanakupulla.SmsReceiver"
+            android:exported="false"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

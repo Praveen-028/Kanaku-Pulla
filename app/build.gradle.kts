@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kanakupulla"
+    namespace = "com.mad.kanakupulla"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.kanakupulla"
+        applicationId = "com.mad.kanakupulla"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -37,9 +37,9 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation(libs.androidx.core.ktx)
-    implementation ("com.firebaseui:firebase-ui-database:8.0.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation ("com.airbnb.android:lottie:6.4.0")
     implementation(libs.androidx.appcompat)
@@ -48,8 +48,11 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
-    implementation(libs.firebase.firestore)
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.google.firebase:firebase-storage")
+    implementation ("com.squareup.picasso:picasso:2.71828")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation ("com.google.firebase:firebase-firestore:24.1.0")
 }

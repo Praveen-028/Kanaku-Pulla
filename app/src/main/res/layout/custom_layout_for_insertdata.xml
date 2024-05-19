@@ -66,11 +66,11 @@
                     android:layout_weight="2"
                     android:layout_margin="10dp"
                     android:layout_height="wrap_content">
-                    <EditText
+                    <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/type_edt"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         />
                 </RelativeLayout>
             </LinearLayout>

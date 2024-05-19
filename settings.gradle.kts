@@ -7,18 +7,20 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        mavenCentral()
+        jcenter()
         gradlePluginPortal()
+        maven("https://jitpack.io") // Moved JitPack repository inside pluginManagement
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        mavenCentral()
+        jcenter()
+        maven("https://jitpack.io") // Use maven("https://jitpack.io") instead of maven{url 'https://jitpack.io'}
     }
 }
 
 rootProject.name = "Kanaku pulla"
 include(":app")
- 

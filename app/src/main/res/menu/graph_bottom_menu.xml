@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/IncGraph"
+        android:title="Income Graph"
+        android:icon="@drawable/dashboard"
+        android:visible="true"
+        />
+    <item android:id="@+id/ExpGraph"
+        android:title="Expense Graph"
+        android:visible="true"
+        android:icon="@drawable/income"
+        />
+</menu>

@@ -10,10 +10,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense Manager"
+        android:text="Kanaku Pulla"
         android:textStyle="bold"
-        android:fontFamily="monospace"
-        android:textSize="30dp"
+        android:fontFamily="cursive"
+        android:textSize="40dp"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/white"
         android:gravity="center"/>
